@@ -105,8 +105,8 @@ jobs:
           name: Front-end Scan
           command: |
             cd frontend
-            npm install express --save
-            npm init
+            npm install
+            npm init --yes
             npm audit --audit-level-critical
 
   scan-backend:
@@ -120,7 +120,7 @@ jobs:
           command: |
             cd backend
             npm install express --save
-            npm init
+            npm init --yes
             npm audit --audit-level-critical
 
 #   deploy-infrastructure:
