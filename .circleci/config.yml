@@ -121,7 +121,6 @@ jobs:
           command: |
             cd frontend
             npm install
-            npm install --save-dev 5.0.2
             npm audit fix --force --audit-level-critical
             npm audit --audit-level-critical
       - notify_on_failure
@@ -138,7 +137,6 @@ jobs:
           command: |
             cd backend
             npm install
-            npm install --save-dev 5.0.2
             npm audit fix --force --audit-level-critical
             npm audit fix --force --audit-level-critical
             npm audit --audit-level-critical
@@ -308,14 +306,14 @@ jobs:
 #             then
 #               # your code here
 #             fi
-  notify_on_success:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - slack/notify:
-          event: pass
-          channel: egfwd-project03
-          template: success_tagged_deployment_1
+  # notify_on_success:
+  #   docker:
+  #     - image: cimg/base:stable
+  #   steps:
+  #     - slack/notify:
+  #         event: pass
+  #         channel: egfwd-project03
+  #         template: success_tagged_deployment_1
 
 workflows:
   default:
