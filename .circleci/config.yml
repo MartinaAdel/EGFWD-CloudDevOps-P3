@@ -143,7 +143,6 @@ jobs:
       - notify_on_failure
 
 #   deploy-infrastructure:
-# npm audit fix --force --audit-level-critical
 #     docker:
 #       # Docker image here that supports AWS CLI
 #     steps:
