@@ -121,6 +121,7 @@ jobs:
           command: |
             cd frontend
             npm install
+            npm audit fix --audit-level=critical
             npm audit --audit-level-critical
       - notify_on_failure
 
@@ -136,6 +137,7 @@ jobs:
           command: |
             cd backend
             npm install
+            npm audit fix --audit-level=critical
             npm audit --audit-level-critical
       - notify_on_failure
 
