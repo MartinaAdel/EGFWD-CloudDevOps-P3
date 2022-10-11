@@ -1,15 +1,15 @@
 version: 2.1
 
-orbs:
-  slack: circleci/slack@4.9.3
+# orbs:
+#   slack: circleci/slack@4.9.3
 
-commands:
-  notify_on_failure:
-    steps:
-      - slack/notify:
-          event: fail
-          channel: egfwd-project03
-          template: basic_fail_1
+# commands:
+#   notify_on_failure:
+#     steps:
+#       - slack/notify:
+#           event: fail
+#           channel: egfwd-project03
+#           template: basic_fail_1
 
 #   destroy-environment:
 #     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -41,7 +41,7 @@ commands:
 #             #  Add revert code here. You can find this in the Getting Started section.
 #               exit 1
 #             fi
-            
+
 jobs:
   build-frontend:
     docker:
@@ -59,7 +59,7 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-      - notify_on_failure
+      # - notify_on_failure
 
   build-backend:
     docker:
@@ -77,7 +77,7 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-      - notify_on_failure
+      # - notify_on_failure
 
   test-frontend:
     docker:
@@ -92,7 +92,7 @@ jobs:
             cd frontend
             npm install
             npm test
-      - notify_on_failure
+      # - notify_on_failure
 
   test-backend:
     docker:
@@ -107,7 +107,7 @@ jobs:
             cd backend
             npm install
             npm test
-      - notify_on_failure
+      # - notify_on_failure
 
   scan-frontend:
     docker:
@@ -122,9 +122,9 @@ jobs:
             cd frontend
             npm install
             npm install oauth-sign@^0.9.0
-            npm audit fix --audit-level-critical
+            npm audit fix --audit-level=critical --force
             npm audit --audit-level-critical
-      - notify_on_failure
+      # - notify_on_failure
 
   scan-backend:
     docker:
@@ -138,10 +138,10 @@ jobs:
           command: |
             cd backend
             npm install
-            npm audit fix --audit-level-critical
-            npm audit fix --audit-level-critical
+            npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
             npm audit --audit-level-critical
-      - notify_on_failure
+      # - notify_on_failure
 
 #   deploy-infrastructure:
 #     docker:
