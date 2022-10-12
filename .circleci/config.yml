@@ -132,7 +132,7 @@ jobs:
 
   scan-frontend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -142,7 +142,7 @@ jobs:
           command: |
             cd frontend
             npm install
-          # npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
           # npm audit --audit-level-critical
       # - notify_on_failure
 
@@ -158,8 +158,8 @@ jobs:
           command: |
             cd backend
             npm install
-          # npm audit fix --audit-level=critical --force
-          # npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
           # npm audit --audit-level-critical
       # - notify_on_failure
 
@@ -222,6 +222,7 @@ jobs:
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
+          #======================= ERROR UP HERE =======================
       - destroy-environment
 
 #   run-migrations:
@@ -357,13 +358,13 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [main]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
+      # - deploy-infrastructure:
+      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches:
+      #         only: [main]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
       # - run-migrations:
       #     requires: [configure-infrastructure]
       # - deploy-frontend:
