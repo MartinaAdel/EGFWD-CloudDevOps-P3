@@ -211,11 +211,11 @@ jobs:
             - "31:d6:29:b3:27:76:68:47:a9:16:43:d3:f2:05:80:6a"
       - attach_workspace:
           at: ~/
-      - run:
-          name: Install dependencies
-          command: |
-            # Your code here
-            exit 1
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #       # Your code here
+      #       exit 1
       - run:
           name: Configure server
           command: |
