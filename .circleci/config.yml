@@ -142,7 +142,6 @@ jobs:
           command: |
             cd frontend
             sudo npm install
-            sudo npm update -g
             sudo npm audit fix --force
             sudo npm audit fix --audit-level=critical --force
             sudo npm audit --audit-level-critical
@@ -160,7 +159,6 @@ jobs:
           command: |
             cd backend
             sudo npm install
-            sudo npm update -g
             sudo npm audit fix --force
             sudo npm audit fix --audit-level=critical --force
             sudo npm audit fix --audit-level=critical --force
