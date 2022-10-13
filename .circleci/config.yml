@@ -141,11 +141,11 @@ jobs:
           name: Front-end Scan
           command: |
             cd frontend
-            npm install
-            npm update -g
-            npm audit fix --force
-            npm audit fix --audit-level=critical --force
-            npm audit --audit-level-critical
+            sudo npm install
+            sudo npm update -g
+            sudo npm audit fix --force
+            sudo npm audit fix --audit-level=critical --force
+            sudo npm audit --audit-level-critical
       # - notify_on_failure
 
   scan-backend:
@@ -159,12 +159,12 @@ jobs:
           name: Back-end Scan
           command: |
             cd backend
-            npm install
-            npm update -g
-            npm audit fix --force
-            npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical --force
-            npm audit --audit-level-critical
+            sudo npm install
+            sudo npm update -g
+            sudo npm audit fix --force
+            sudo npm audit fix --audit-level=critical --force
+            sudo npm audit fix --audit-level=critical --force
+            sudo npm audit --audit-level-critical
       # - notify_on_failure 
 
   deploy-infrastructure:
