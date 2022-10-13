@@ -141,7 +141,7 @@ jobs:
           name: Front-end Scan
           command: |
             cd frontend
-            sudo npm install
+            sudo npm install npm@latest -g
             sudo npm audit fix --force
             sudo npm audit fix --audit-level-critical --force
             sudo npm audit fix --audit-level-critical --force
