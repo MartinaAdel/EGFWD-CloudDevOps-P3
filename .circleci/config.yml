@@ -144,8 +144,8 @@ jobs:
             sudo npm install
             sudo npm audit fix --force
             sudo npm audit fix --force
-            sudo npm audit fix --force
             sudo npm audit --audit-level-critical
+            sudo npm audit fix --force
       # - notify_on_failure
 
   scan-backend:
@@ -162,8 +162,9 @@ jobs:
             sudo npm install
             sudo npm audit fix --force
             sudo npm audit fix --force
-            sudo npm audit fix --force
             sudo npm audit --audit-level-critical
+            sudo npm audit fix --force
+            
       # - notify_on_failure 
 
   deploy-infrastructure:
