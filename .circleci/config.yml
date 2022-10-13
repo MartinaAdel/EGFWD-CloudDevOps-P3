@@ -143,6 +143,7 @@ jobs:
             cd frontend
             sudo npm install
             sudo npm audit fix --force
+            sudo npm audit fix --force
             sudo npm audit --audit-level-critical
       # - notify_on_failure
 
@@ -158,6 +159,7 @@ jobs:
           command: |
             cd backend
             sudo npm install
+            sudo npm audit fix --force
             sudo npm audit fix --force
             sudo npm audit --audit-level-critical
       # - notify_on_failure 
