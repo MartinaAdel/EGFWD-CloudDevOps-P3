@@ -173,6 +173,8 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
+            npm update minimist@1.2.6
+            npm audit fix --audit-level=critical
             npm audit --audit-level=critical
       # - notify_on_failure 
 
