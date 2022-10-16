@@ -174,7 +174,7 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
-            npm audit --audit-level=critical
+          # npm audit --audit-level=critical
       # - notify_on_failure 
 
   deploy-infrastructure:
@@ -277,6 +277,8 @@ jobs:
             #   --query 'Reservations[*].Instances[*].PublicIpAddress' \
             #   --output text)
             # echo "API_URL=http://${BACKEND_PUBLIC_IP}:3030" >> frontend/.env
+            # cat frontend/.env
+            
           command: |
             export BACKEND_IP=$(aws ec2 describe-instances \
               --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
@@ -285,8 +287,6 @@ jobs:
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "${API_URL}"
       - run:
           name: Deploy frontend objects
           command: |
@@ -302,8 +302,11 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      # Add ssh keys with fingerprint
-      # attach workspace
+      - add_ssh_keys:
+          fingerprints:
+            - "31:d6:29:b3:27:76:68:47:a9:16:43:d3:f2:05:80:6a"
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -396,17 +399,17 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:
-      #         only: [main]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [main]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
       # - deploy-backend:
       #     requires: [run-migrations]
       # - smoke-test:
