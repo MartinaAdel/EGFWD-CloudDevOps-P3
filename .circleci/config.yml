@@ -172,10 +172,6 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
-      # - save_cache:
-      #     paths: [backend/node_modules]
-      #     key: backend-build
-      # - notify_on_failure 
 
   deploy-infrastructure:
     docker:
@@ -312,12 +308,13 @@ jobs:
             npm install
       - run:
           name: Packaging
+          # tar -czf artifact.tar.gz dist/* package/*
           command: |
             cd backend
             npm run build
-            tar -czf artifact.tar.gz dist/* package/*
             cd..
-            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
+            tar -C backend -czvf artifact.tar.gz
+          # cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
       - run:
           name: Deploy backend
           command: |
