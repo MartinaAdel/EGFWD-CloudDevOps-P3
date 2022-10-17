@@ -162,8 +162,6 @@ jobs:
       - image: cimg/node:13.8.0
     steps:
       - checkout
-      # - restore_cache:
-      #     keys: [backend-build]
       - run:
           name: Back-end Scan
           command: |
@@ -308,8 +306,6 @@ jobs:
             npm install
       - run:
           name: Packaging
-          # tar -czf artifact.tar.gz dist/* package/*
-          # tar -C backend -czvf artifact.tar.gz
           command: |
             cd backend
             npm run build
@@ -401,18 +397,20 @@ jobs:
             export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/old_workflow_id)
             echo OldWorkflowID: "${OldWorkflowID}"
             echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
-            
-            export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
-                --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
-            echo Stack names: "${STACKS[@]}" 
       - run:
           name: Remove old stacks and files
           command: |
+            export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+                --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
+            echo Stack names: "${STACKS[@]}"
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
+              echo "---------------------- Delete Confirmed -------------------------"
               aws s3 rm s3://udapeople-${OldWorkflowID} --recursive
               aws cloudformation delete-stack --stack-name udapeople-backend-${OldWorkflowID}
               aws cloudformation delete-stack --stack-name udapeople-frontend-${OldWorkflowID}
+            else
+              echo "---------------------- Cannot Cleanup -------------------------"
             fi
 
   notify_on_success:
